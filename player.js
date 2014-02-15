@@ -10,20 +10,24 @@ var PlayerControl = function(){
 		player.animations.add('walkUp', Phaser.Animation.generateFrameNames('Pinky_B_Walk_', 1, 11, '.png', 4), 15, true);
 		player.animations.add('walkDown', Phaser.Animation.generateFrameNames('Pinky_F_Walk_', 1, 11, '.png', 4), 15, true);
 		player.animations.add('walkLeft', Phaser.Animation.generateFrameNames('Pinky_L_Walk_', 1, 11, '.png', 4), 15, true);
-		player.animations.add('walkRight', Phaser.Animation.generateFrameNames('Pinky_R_Walk_', 1, 11, '.png', 4), 15, true);			
+		player.animations.add('walkRight', Phaser.Animation.generateFrameNames('Pinky_R_Walk_', 1, 11, '.png', 4), 15, true);	
+
+		game.camera.follow(player);
 	}
 	
 	var updateAction = function(c){
 		currentFrame = c;
 		switch(c){
-			case "left": player.animations.play('walkLeft'); break;
-			case "right": player.animations.play('walkRight'); break;
-			case "down": player.animations.play('walkDown'); break;
-			case "up": player.animations.play('walkUp'); break;
+			case "left": player.animations.play('walkLeft'); player.body.velocity.x = -150; break;
+			case "right": player.animations.play('walkRight'); player.body.velocity.x = 150; break;
+			case "down": player.animations.play('walkDown'); player.body.velocity.y = 150; break;
+			case "up": player.animations.play('walkUp'); player.body.velocity.y = -150; break;
 		}
 	};
 	
 	var stop = function(){
+		player.body.velocity.x = 0;
+		player.body.velocity.y = 0;
 		switch(currentFrame){
 			case "left": player.animations.play('blinkLeft'); break;
 			case "right": player.animations.play('blinkRight'); break;

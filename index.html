@@ -20,24 +20,30 @@
         game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update:update});
 
         function preload () {
+			game.load.tilemap('level1', 'assets/map/testlevel.json', null, Phaser.Tilemap.TILED_JSON);
+			game.load.image('tiles-1', 'assets/map/seasons.png');
 			game.load.atlas('zilda', 'assets/sprites/zilda.png', 'assets/sprites/zilda.json');
             game.load.image('logo', 'Phaser/phaser.png');
 			
         }
-		
+		var layer;
+		var map;
 		var player;
 		var playercont;
 		var cursors;
 		
         function create () {
-			game.add.tileSprite(0, 0, 2000, 2000, 'logo'); //???? Phaser.Canvas
+		
+			map = game.add.tilemap('level1');
+			map.addTilesetImage('tiles-1');
+			//map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
+			layer = map.createLayer('Tile Layer 1');
+			layer.resizeWorld();
+
+			
 			playercont = new PlayerControl(game);
 			playercont.creat();
 			
-			/*upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-			downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-			leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-			rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);*/
 			cursors = game.input.keyboard.createCursorKeys();
 
         }
